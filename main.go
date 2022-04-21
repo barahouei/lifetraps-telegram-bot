@@ -23,6 +23,8 @@ func main() {
 	updates := bot.GetUpdatesChan(u)
 
 	for update := range updates {
+		go bot.Request(tgbotapi.NewDeleteMessage(update.Message.Chat.ID, update.Message.MessageID))
+
 		if update.Message != nil && update.Message.IsCommand() {
 			go commandHandling(bot, update)
 		} else {
