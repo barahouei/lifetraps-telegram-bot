@@ -10,6 +10,7 @@ func messageHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 
 	msg.Text = wrongCommand
+	msg.ReplyMarkup = backToMainMenuKeyboard
 
 	errorCh := make(chan error)
 
