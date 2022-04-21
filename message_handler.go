@@ -9,7 +9,7 @@ import (
 func messageHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 
-	msg.Text = "دستوری که وارد کردی درست نیست."
+	msg.Text = wrongCommand
 
 	if _, err := bot.Send(msg); err != nil {
 		log.Panic(err)

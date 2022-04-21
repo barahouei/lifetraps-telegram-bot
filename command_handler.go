@@ -17,9 +17,9 @@ func commandHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	msg := tgbotapi.NewMessage(userID, "")
 
 	if update.Message.Command() == "start" {
-		msg.Text = "سلام به بات تله‌های زندگی خوش آمدید."
+		msg.Text = greeting
 	} else {
-		msg.Text = "دستوری که وارد کردی درست نیست."
+		msg.Text = wrongCommand
 	}
 
 	errorCh := make(chan error)
