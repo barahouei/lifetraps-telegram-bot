@@ -7,14 +7,7 @@ import (
 )
 
 func commandHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-	userID := update.Message.Chat.ID
-	msgID := update.Message.MessageID
-
-	for i := msgID; i > 0; i-- {
-		go bot.Request(tgbotapi.NewDeleteMessage(userID, i))
-	}
-
-	msg := tgbotapi.NewMessage(userID, "")
+	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 
 	if update.Message.Command() == "start" {
 		msg.Text = greeting
