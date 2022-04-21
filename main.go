@@ -23,18 +23,10 @@ func main() {
 	updates := bot.GetUpdatesChan(u)
 
 	for update := range updates {
-		if update.Message == nil {
-			continue
-		}
-
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
-
-		if update.Message.Command() == "start" {
-			msg.Text = "سلام به بات تله‌های زندگی خوش آمدید."
-		}
-
-		if _, err := bot.Send(msg); err != nil {
-			log.Panic(err)
+		if update.Message != nil && update.Message.IsCommand() {
+			go commandHandling(bot, update)
+		} else {
+			go messageHandling(bot, update)
 		}
 	}
 }
