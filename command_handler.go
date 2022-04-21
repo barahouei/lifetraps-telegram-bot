@@ -18,6 +18,8 @@ func commandHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 	if update.Message.Command() == "start" {
 		msg.Text = greeting
+	} else if update.Message.Command() == "help" {
+		msg.Text = guide
 	} else {
 		msg.Text = wrongCommand
 	}
