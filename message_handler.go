@@ -11,7 +11,16 @@ func messageHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 	msg.Text = wrongCommand
 
-	if _, err := bot.Send(msg); err != nil {
+	errorCh := make(chan error)
+
+	go func() {
+		_, err := bot.Send(msg)
+
+		errorCh <- err
+	}()
+
+	err := <-errorCh
+	if err != nil {
 		log.Panic(err)
 	}
 }
