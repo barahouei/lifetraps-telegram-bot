@@ -13,6 +13,15 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	case "backToMainMenu":
 		msg.Text = greeting
 		msg.ReplyMarkup = mainMenuKeyboard
+	case "quiz":
+		msg.Text = "این یک متن موقتی برای دکمه تست است."
+		msg.ReplyMarkup = backToMainMenuKeyboard
+	case "myLifeTraps":
+		msg.Text = "این یک متنی موقتی برای دکمه تله‌های من است."
+		msg.ReplyMarkup = backToMainMenuKeyboard
+	case "guide":
+		msg.Text = guide
+		msg.ReplyMarkup = backToMainMenuKeyboard
 	}
 
 	errorCh := make(chan error)
