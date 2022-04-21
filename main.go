@@ -23,7 +23,6 @@ func main() {
 	updates := bot.GetUpdatesChan(u)
 
 	for update := range updates {
-
 		if update.Message != nil && update.Message.IsCommand() {
 			userID := update.Message.Chat.ID
 			msgID := update.Message.MessageID
@@ -33,6 +32,10 @@ func main() {
 			}
 
 			go commandHandling(bot, update)
+		} else if update.CallbackQuery != nil {
+			go bot.Request(tgbotapi.NewDeleteMessage(update.CallbackQuery.Message.Chat.ID, update.CallbackQuery.Message.MessageID))
+
+			go callbackHandling(bot, update)
 		} else {
 			go bot.Request(tgbotapi.NewDeleteMessage(update.Message.Chat.ID, update.Message.MessageID))
 

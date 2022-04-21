@@ -16,6 +16,6 @@ var mainMenuKeyboard = tgbotapi.NewInlineKeyboardMarkup(
 
 var backToMainMenuKeyboard = tgbotapi.NewInlineKeyboardMarkup(
 	tgbotapi.NewInlineKeyboardRow(
-		tgbotapi.NewInlineKeyboardButtonData("برگشت به منوی اصلی", "backToEntry"),
+		tgbotapi.NewInlineKeyboardButtonData("برگشت به منوی اصلی", "backToMainMenu"),
 	),
 )
