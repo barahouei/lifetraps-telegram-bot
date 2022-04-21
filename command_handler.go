@@ -12,7 +12,7 @@ func commandHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	if update.Message.Command() == "start" {
 		msg.Text = greeting
 		msg.ReplyMarkup = mainMenuKeyboard
-	} else if update.Message.Command() == "help" {
+	} else if update.Message.Command() == "guide" {
 		msg.Text = guide
 		msg.ReplyMarkup = backToMainMenuKeyboard
 	} else {
