@@ -33,6 +33,10 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		msg.Text = greeting
 		msg.ReplyMarkup = mainMenuKeyboard
 	case "quiz":
+		user := users{telegramID: update.CallbackQuery.From.ID}
+
+		go resetTest(user.telegramID)
+
 		questionChan := make(chan string)
 		cIDChan := make(chan int)
 		errorChan := make(chan error)
