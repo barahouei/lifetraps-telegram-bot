@@ -109,7 +109,24 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 			msg.ReplyMarkup = scoreButtons(qID+1, categotyID)
 		}
 	case "myLifeTraps":
-		msg.Text = "این یک متنی موقتی برای دکمه تله‌های من است."
+		user := users{telegramID: update.CallbackQuery.From.ID}
+
+		ltChan := make(chan []string)
+
+		go func() {
+			lt := showLifetraps(user.telegramID)
+			ltChan <- lt
+		}()
+
+		lifetraps := <-ltChan
+
+		var lifetrapsInText string
+
+		for i, lifetrap := range lifetraps {
+			lifetrapsInText += fmt.Sprintf("تله شماره %d:\n%s\n", i+1, lifetrap)
+		}
+
+		msg.Text = showingLifetraps + lifetrapsInText
 		msg.ReplyMarkup = backToMainMenuKeyboard
 	case "guide":
 		msg.Text = guide
