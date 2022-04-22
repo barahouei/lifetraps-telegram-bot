@@ -14,8 +14,10 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		msg.Text = greeting
 		msg.ReplyMarkup = mainMenuKeyboard
 	case "quiz":
-		msg.Text = "این یک متن موقتی برای دکمه تست است."
-		msg.ReplyMarkup = backToMainMenuKeyboard
+		question, cID := questionWalker(1)
+
+		msg.Text = question
+		msg.ReplyMarkup = scoreButtons(1, cID)
 	case "myLifeTraps":
 		msg.Text = "این یک متنی موقتی برای دکمه تله‌های من است."
 		msg.ReplyMarkup = backToMainMenuKeyboard
