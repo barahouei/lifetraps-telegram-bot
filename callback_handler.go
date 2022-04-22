@@ -55,7 +55,13 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		msg.Text = question
 		msg.ReplyMarkup = scoreButtons(1, cID)
 	case "score=" + score + "-qid=" + qID + "-cid=" + cID:
+		user := users{}
+		user.telegramID = update.CallbackQuery.From.ID
+		score, _ := strconv.Atoi(score)
 		qID, _ := strconv.Atoi(qID)
+		cID, _ := strconv.Atoi(cID)
+
+		go setScore(user.telegramID, score, qID, cID)
 
 		questionChan := make(chan string)
 		cIDChan := make(chan int)
