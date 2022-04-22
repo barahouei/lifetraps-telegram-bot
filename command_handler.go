@@ -10,6 +10,8 @@ func commandHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 
 	if update.Message.Command() == "start" {
+		go checkUserExists(update)
+
 		msg.Text = greeting
 		msg.ReplyMarkup = mainMenuKeyboard
 	} else if update.Message.Command() == "guide" {
