@@ -81,6 +81,8 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		err := <-errorChan
 
 		if err != nil {
+			go setTestCompleted(user.telegramID)
+
 			ltChan := make(chan []string)
 
 			go func() {
