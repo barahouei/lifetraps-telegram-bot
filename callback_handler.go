@@ -81,7 +81,15 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		err := <-errorChan
 
 		if err != nil {
-			lifetraps := showLifetraps(user.telegramID)
+			ltChan := make(chan []string)
+
+			go func() {
+				lt := showLifetraps(user.telegramID)
+				ltChan <- lt
+			}()
+
+			lifetraps := <-ltChan
+
 			var lifetrapsInText string
 
 			for i, lifetrap := range lifetraps {
