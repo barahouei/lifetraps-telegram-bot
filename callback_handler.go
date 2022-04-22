@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -80,7 +81,14 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		err := <-errorChan
 
 		if err != nil {
-			msg.Text = testEnded
+			lifetraps := showLifetraps(user.telegramID)
+			var lifetrapsInText string
+
+			for i, lifetrap := range lifetraps {
+				lifetrapsInText += fmt.Sprintf("تله شماره %d:\n%s\n", i+1, lifetrap)
+			}
+
+			msg.Text = testEnded + lifetrapsInText
 			msg.ReplyMarkup = backToMainMenuKeyboard
 		} else {
 			msg.Text = question
