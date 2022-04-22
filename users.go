@@ -11,6 +11,7 @@ type users struct {
 	username   string
 	firstname  string
 	lastname   string
+	tested     bool
 }
 
 //This function check if user already existed or not,
@@ -24,6 +25,7 @@ func checkUserExists(update tgbotapi.Update) {
 	user.username = update.Message.From.UserName
 	user.firstname = update.Message.From.FirstName
 	user.lastname = update.Message.From.LastName
+	user.tested = false
 
 	db := dbConnect()
 	defer db.Close()
@@ -36,12 +38,12 @@ func checkUserExists(update tgbotapi.Update) {
 	}
 
 	if !existed {
-		stmt, err := db.Prepare("INSERT INTO users(telegram_id, username, firstname, lastname) VALUES(?, ?, ?, ?)")
+		stmt, err := db.Prepare("INSERT INTO users(telegram_id, username, firstname, lastname, tested) VALUES(?, ?, ?, ?, ?)")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		_, err = stmt.Exec(user.telegramID, user.username, user.firstname, user.lastname)
+		_, err = stmt.Exec(user.telegramID, user.username, user.firstname, user.lastname, user.tested)
 		if err != nil {
 			log.Fatal(err)
 		}
