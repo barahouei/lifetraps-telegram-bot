@@ -8,9 +8,11 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var dbname = os.Getenv("LIFETRAPS_DBNAME")
-var dbUsername = os.Getenv("DB_USERNAME")
-var dbPassword = os.Getenv("DB_PASSWORD")
+var (
+	dbname     = os.Getenv("LIFETRAPS_DBNAME")
+	dbUsername = os.Getenv("DB_USERNAME")
+	dbPassword = os.Getenv("DB_PASSWORD")
+)
 
 func dbConnect() *sql.DB {
 	db, err := sql.Open("mysql", dbUsername+":"+dbPassword+"@/"+dbname)
