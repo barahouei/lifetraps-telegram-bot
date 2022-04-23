@@ -31,16 +31,16 @@ func scoreButtons(questionID int, categoryID int) tgbotapi.InlineKeyboardMarkup 
 
 	sbKeyboard := tgbotapi.NewInlineKeyboardMarkup(
 		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonData("Completely untrue of me", "score=1-qid="+qID+"-cid="+cid),
-			tgbotapi.NewInlineKeyboardButtonData("Mostly untrue of me", "score=2-qid="+qID+"-cid="+cid),
+			tgbotapi.NewInlineKeyboardButtonData("کاملا نادرسته", "score=1-qid="+qID+"-cid="+cid),
+			tgbotapi.NewInlineKeyboardButtonData("تقریبا نادرسته", "score=2-qid="+qID+"-cid="+cid),
 		),
 		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonData("Slightly more true than untrue of me", "score=3-qid="+qID+"-cid="+cid),
-			tgbotapi.NewInlineKeyboardButtonData("Moderately true of me", "score=4-qid="+qID+"-cid="+cid),
+			tgbotapi.NewInlineKeyboardButtonData("بیشتر درسته تا غلط", "score=3-qid="+qID+"-cid="+cid),
+			tgbotapi.NewInlineKeyboardButtonData("نسبتا درسته", "score=4-qid="+qID+"-cid="+cid),
 		),
 		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonData("Mostly true of me", "score=5-qid="+qID+"-cid="+cid),
-			tgbotapi.NewInlineKeyboardButtonData("Describes me perfectly", "score=6-qid="+qID+"-cid="+cid),
+			tgbotapi.NewInlineKeyboardButtonData("تقریبا درسته", "score=5-qid="+qID+"-cid="+cid),
+			tgbotapi.NewInlineKeyboardButtonData("کاملا درسته", "score=6-qid="+qID+"-cid="+cid),
 		),
 		tgbotapi.NewInlineKeyboardRow(
 			tgbotapi.NewInlineKeyboardButtonData("برگشت به منوی اصلی", "backToMainMenu"),
