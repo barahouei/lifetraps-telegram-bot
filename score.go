@@ -20,7 +20,12 @@ func setScore(telegramID int64, score int, questionID int, categoryID int) {
 
 //This function returns all lifetraps which user has.
 func showLifetraps(telegramID int64) []string {
-	lt := maxScore(telegramID)
+	ltChan := make(chan map[int]int)
+	go func() {
+		lts := maxScore(telegramID)
+		ltChan <- lts
+	}()
+	lt := <-ltChan
 
 	lifetraps := []string{}
 
