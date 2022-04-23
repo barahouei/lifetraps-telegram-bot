@@ -13,6 +13,19 @@ func questionWalker(questionID int) (question string, categoryID int, err error)
 	return question, categoryID, err
 }
 
+//This function returns the number of test questions.
+func numberOfQuestions() (count int) {
+	db := dbConnect()
+	defer db.Close()
+
+	err := db.QueryRow("SELECT COUNT(qid) FROM questions").Scan(&count)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return count
+}
+
 //This function sets a true value for the user when test completed.
 func setTestCompleted(telegramID int64) {
 	db := dbConnect()

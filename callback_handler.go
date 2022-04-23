@@ -37,6 +37,15 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 		go resetTest(user.telegramID)
 
+		countChan := make(chan int)
+
+		go func() {
+			num := numberOfQuestions()
+			countChan <- num
+		}()
+
+		count := <-countChan
+
 		questionChan := make(chan string)
 		cIDChan := make(chan int)
 		errorChan := make(chan error)
@@ -49,7 +58,8 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 			errorChan <- err
 		}()
 
-		question := <-questionChan
+		question := fmt.Sprintf("سوال شماره %d از مجموع %d سوال:\n", 1, count)
+		question += <-questionChan
 		cID := <-cIDChan
 		err := <-errorChan
 
@@ -68,6 +78,15 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 		go setScore(user.telegramID, score, qID, cID)
 
+		countChan := make(chan int)
+
+		go func() {
+			num := numberOfQuestions()
+			countChan <- num
+		}()
+
+		count := <-countChan
+
 		questionChan := make(chan string)
 		cIDChan := make(chan int)
 		errorChan := make(chan error)
@@ -80,7 +99,8 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 			errorChan <- err
 		}()
 
-		question := <-questionChan
+		question := fmt.Sprintf("سوال شماره %d از مجموع %d سوال:\n", qID+1, count)
+		question += <-questionChan
 		categotyID := <-cIDChan
 		err := <-errorChan
 
