@@ -52,18 +52,8 @@ func resetTest(telegramID int64) {
 	user.tested = <-testedChan
 
 	if user.tested {
-		stmt, err := db.Prepare("DELETE FROM scores WHERE telegram_id=?")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		_, err = stmt.Exec(user.telegramID)
-		if err != nil {
-			log.Fatal(err)
-		}
-
 		user.tested = false
-		stmt, err = db.Prepare("UPDATE users SET tested=? WHERE telegram_id=?")
+		stmt, err := db.Prepare("UPDATE users SET tested=? WHERE telegram_id=?")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -72,6 +62,16 @@ func resetTest(telegramID int64) {
 		if err != nil {
 			log.Fatal(err)
 		}
+	}
+
+	stmt, err := db.Prepare("DELETE FROM scores WHERE telegram_id=?")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = stmt.Exec(user.telegramID)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
 
