@@ -27,7 +27,7 @@ func main() {
 			userID := update.Message.Chat.ID
 			msgID := update.Message.MessageID
 
-			for i := msgID; i > 0; i-- {
+			for i := msgID; i > 1; i-- {
 				go bot.Request(tgbotapi.NewDeleteMessage(userID, i))
 			}
 
@@ -36,10 +36,12 @@ func main() {
 			go bot.Request(tgbotapi.NewDeleteMessage(update.CallbackQuery.Message.Chat.ID, update.CallbackQuery.Message.MessageID))
 
 			go callbackHandling(bot, update)
-		} else {
+		} else if update.Message != nil {
 			go bot.Request(tgbotapi.NewDeleteMessage(update.Message.Chat.ID, update.Message.MessageID))
 
 			go messageHandling(bot, update)
+		} else {
+			continue
 		}
 	}
 }
