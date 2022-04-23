@@ -96,14 +96,19 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 			lifetraps := <-ltChan
 
-			var lifetrapsInText string
+			if len(lifetraps) == 0 {
+				msg.Text = noLifetrap
+				msg.ReplyMarkup = backToMainMenuKeyboard
+			} else {
+				var lifetrapsInText string
 
-			for i, lifetrap := range lifetraps {
-				lifetrapsInText += fmt.Sprintf("تله شماره %d:\n%s\n", i+1, lifetrap)
+				for i, lifetrap := range lifetraps {
+					lifetrapsInText += fmt.Sprintf("تله شماره %d:\n%s\n", i+1, lifetrap)
+				}
+
+				msg.Text = testEnded + lifetrapsInText
+				msg.ReplyMarkup = backToMainMenuKeyboard
 			}
-
-			msg.Text = testEnded + lifetrapsInText
-			msg.ReplyMarkup = backToMainMenuKeyboard
 		} else {
 			msg.Text = question
 			msg.ReplyMarkup = scoreButtons(qID+1, categotyID)
@@ -130,14 +135,19 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 			lifetraps := <-ltChan
 
-			var lifetrapsInText string
+			if len(lifetraps) == 0 {
+				msg.Text = noLifetrap
+				msg.ReplyMarkup = backToMainMenuKeyboard
+			} else {
+				var lifetrapsInText string
 
-			for i, lifetrap := range lifetraps {
-				lifetrapsInText += fmt.Sprintf("تله شماره %d:\n%s\n", i+1, lifetrap)
+				for i, lifetrap := range lifetraps {
+					lifetrapsInText += fmt.Sprintf("تله شماره %d:\n%s\n", i+1, lifetrap)
+				}
+
+				msg.Text = showingLifetraps + lifetrapsInText
+				msg.ReplyMarkup = backToMainMenuKeyboard
 			}
-
-			msg.Text = showingLifetraps + lifetrapsInText
-			msg.ReplyMarkup = backToMainMenuKeyboard
 		} else {
 			msg.Text = testNotCompleted
 			msg.ReplyMarkup = backToMainMenuKeyboard
