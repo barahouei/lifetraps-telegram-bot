@@ -42,6 +42,9 @@ func scoreButtons(questionID int, categoryID int) tgbotapi.InlineKeyboardMarkup 
 			tgbotapi.NewInlineKeyboardButtonData("Mostly true of me", "score=5-qid="+qID+"-cid="+cid),
 			tgbotapi.NewInlineKeyboardButtonData("Describes me perfectly", "score=6-qid="+qID+"-cid="+cid),
 		),
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("برگشت به منوی اصلی", "backToMainMenu"),
+		),
 	)
 
 	return sbKeyboard
