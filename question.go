@@ -42,10 +42,14 @@ func resetTest(telegramID int64) {
 	user := users{}
 	user.telegramID = telegramID
 
-	err := db.QueryRow("SELECT tested FROM users WHERE telegram_id=?", user.telegramID).Scan(&user.tested)
-	if err != nil {
-		log.Fatal(err)
-	}
+	testedChan := make(chan bool)
+	go func() {
+		t := isTestCompleted(user.telegramID)
+
+		testedChan <- t
+	}()
+
+	user.tested = <-testedChan
 
 	if user.tested {
 		stmt, err := db.Prepare("DELETE FROM scores WHERE telegram_id=?")
