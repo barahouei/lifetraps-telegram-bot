@@ -70,3 +70,19 @@ func resetTest(telegramID int64) {
 		}
 	}
 }
+
+//This function checks is user completed the test or not and returns a false or true.
+func isTestCompleted(telegramID int64) bool {
+	db := dbConnect()
+	defer db.Close()
+
+	user := users{}
+	user.telegramID = telegramID
+
+	err := db.QueryRow("SELECT tested FROM users WHERE telegram_id=?", user.telegramID).Scan(&user.tested)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return user.tested
+}

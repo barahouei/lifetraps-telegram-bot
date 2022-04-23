@@ -111,23 +111,37 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	case "myLifeTraps":
 		user := users{telegramID: update.CallbackQuery.From.ID}
 
-		ltChan := make(chan []string)
-
+		testedChan := make(chan bool)
 		go func() {
-			lt := showLifetraps(user.telegramID)
-			ltChan <- lt
+			t := isTestCompleted(user.telegramID)
+
+			testedChan <- t
 		}()
 
-		lifetraps := <-ltChan
+		user.tested = <-testedChan
 
-		var lifetrapsInText string
+		if user.tested {
+			ltChan := make(chan []string)
 
-		for i, lifetrap := range lifetraps {
-			lifetrapsInText += fmt.Sprintf("تله شماره %d:\n%s\n", i+1, lifetrap)
+			go func() {
+				lt := showLifetraps(user.telegramID)
+				ltChan <- lt
+			}()
+
+			lifetraps := <-ltChan
+
+			var lifetrapsInText string
+
+			for i, lifetrap := range lifetraps {
+				lifetrapsInText += fmt.Sprintf("تله شماره %d:\n%s\n", i+1, lifetrap)
+			}
+
+			msg.Text = showingLifetraps + lifetrapsInText
+			msg.ReplyMarkup = backToMainMenuKeyboard
+		} else {
+			msg.Text = testNotCompleted
+			msg.ReplyMarkup = backToMainMenuKeyboard
 		}
-
-		msg.Text = showingLifetraps + lifetrapsInText
-		msg.ReplyMarkup = backToMainMenuKeyboard
 	case "guide":
 		msg.Text = guide
 		msg.ReplyMarkup = backToMainMenuKeyboard
