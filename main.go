@@ -10,7 +10,7 @@ import (
 func main() {
 	bot, err := tgbotapi.NewBotAPI(os.Getenv("LIFETRAPS_APITOKEN"))
 	if err != nil {
-		log.Panic(err)
+		log.Fatal(err)
 	}
 
 	bot.Debug = true
@@ -27,7 +27,7 @@ func main() {
 			userID := update.Message.Chat.ID
 			msgID := update.Message.MessageID
 
-			for i := msgID; i > 1; i-- {
+			for i := 1; i < msgID; i++ {
 				go bot.Request(tgbotapi.NewDeleteMessage(userID, i))
 			}
 
