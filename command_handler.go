@@ -14,6 +14,9 @@ func commandHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 		msg.Text = greeting
 		msg.ReplyMarkup = mainMenuKeyboard
+	} else if update.Message.Command() == "menu" {
+		msg.Text = menu
+		msg.ReplyMarkup = mainMenuKeyboard
 	} else if update.Message.Command() == "guide" {
 		msg.Text = guide
 		msg.ReplyMarkup = backToMainMenuKeyboard

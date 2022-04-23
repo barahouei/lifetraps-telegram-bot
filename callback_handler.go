@@ -30,7 +30,7 @@ func callbackHandling(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 	switch update.CallbackQuery.Data {
 	case "backToMainMenu":
-		msg.Text = greeting
+		msg.Text = menu
 		msg.ReplyMarkup = mainMenuKeyboard
 	case "quiz":
 		user := users{telegramID: update.CallbackQuery.From.ID}
