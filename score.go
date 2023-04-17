@@ -54,7 +54,7 @@ func maxScore(telegramID int64) map[int]int {
 	defer db.Close()
 
 	liftraps := make(map[int]int)
-	for i := 1; i <= 2; i++ {
+	for i := 1; i <= 11; i++ {
 		var maxScore, categoryID int
 
 		err := db.QueryRow("SELECT MAX(score), cid FROM scores WHERE telegram_id=? AND cid=?", telegramID, i).Scan(&maxScore, &categoryID)
